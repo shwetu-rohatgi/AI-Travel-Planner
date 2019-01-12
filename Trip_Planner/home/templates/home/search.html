@@ -1,12 +1,185 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Search</title>
-</head>
+<title>AI-tinerary</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFdP_s4uJmTv6i06k7uvnR9Urhlnmuk1U&callback=initMap">
+    </script>
+  <!--<link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">-->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="shortcut icon" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/favicon.ico" />
+<style>
+.text-black
+{
+    color:black;
+}
+body,h1
+{
+    font-family: "Raleway", sans-serif
+}
+body, html
+{
+    color: black;
+    height: 100%
+}
+.bgimg
+{
+  background-image:url('https://storage.googleapis.com/pebblar-web/landing/hero_bg.svg');
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+#map_div
+{
+    height: 85vh;
+}
+.card
+{
+    border: 0.5px solid black;
+    border-radius: 5px;
+}
+.day_head
+{
+    width: 100%;
+    text-align:left;
+}
+</style>
+<script>
+    // Utility functions:
+    function calculateNumDays(startDate, endDate)
+    {
+        // Returns the number of days between the two dates (both inclusive).
+        // startDate, endDate: Both are in the mm/dd/yyyy format.
+        diff =  Math.floor(( Date.parse(endDate) - Date.parse(startDate) ) / 86400000);
+        return diff+1;
+    }
+</script>
+<script>
+    // STUB STUB STUB.
+    // Replace with actual data from the home page.
+    var start_date = "1/12/2019";
+    var end_date = "1/13/2019";
+    var num_days = calculateNumDays(start_date, end_date);
+    var city = "Los Angeles";
+    var city_coordinates = {lat: 34.052235, lng: -118.243683};
+    var itinerary = {
+        0:
+        {
+            "Date": "1/12/2019",
+            "Venice Beach": {lat: 34.4133825, lng: -119.8412286},
+            "Santa Monica": {lat: 34.024212, lng: -118.496475},
+            "Malibu": {lat: 34.105156, lng: -118.731316}
+        },
+        1:
+        {
+            "Date": "1/13/2019",
+            "Getty Center": {lat: 34.094179, lng: -118.439484},
+            "Hollywood walk of fame": {lat: 34.1016991, lng: -118.33368359999997},
+            "Griffith Observatory": {lat: 34.11843410000003, lng: -118.30039349999998}
+        }
+    }
+</script>
 <body>
+  <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+      <a class="navbar-brand w3-text-white" href="#">AI-tiniary</a>
+      <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>-->
+      <!-- <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav w3-text-white">
+          <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="#">Features</a>
+          <a class="nav-item nav-link" href="#">Pricing</a>
+          <a class="nav-item nav-link disabled" href="#">Disabled</a>
+        </div>
+      </div> -->
+    </nav>
+    <div class = "container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h1 class="text-black">Itinerary for <span id="num_days"></span> days in <span id="city_name"></span></h1>
+                <h3 class="text-black">From <span id="start"></span> to <span id="end"></span></h3>
+                <hr />
+                <div>
+                    <div class="accordion text-black" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link day_head" onclick="this.blur();getmarkers(0);" type="button" data-toggle="collapse" data-target="#collapseOne" aria-controls="collapseOne">
+                                        <h3>Day 1</h3>
+                                    </button>
+                                </h5>
+                            </div>
+                    
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <ul>
+                                        <li>Venice Beach</li>
+                                        <li>Santa Monica</li>
+                                        <li>Malibu</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed day_head" onclick="this.blur()" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <h3>Day 2</h3>
+                                </button>
+                            </h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <ul>
+                                        <li>Getty Center</li>
+                                        <li>Hollywood Walk of Fame</li>
+                                        <li>Griffith Observatory</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" id="map_div">
+            </div>
+        </div>
+        <script>
+            // Map related functions:
+            function initMap()
+            {
+                var map = new google.maps.Map(document.getElementById('map_div'), {
+                    zoom: 10,
+                    center: city_coordinates
+                });
+            }
+            function getmarkers(index)
+            {
 
-<h1>This is a Search</h1>
-<p>This is a paragraph.</p>
-
+            }
+        </script>
+    </div>
+  </div>
 </body>
+<script>
+    // Set up data.
+    document.getElementById("city_name").innerHTML = city;
+    document.getElementById("num_days").innerHTML = num_days;
+    document.getElementById("start").innerHTML = start_date;
+    document.getElementById("end").innerHTML = end_date;
+</script>
 </html>
