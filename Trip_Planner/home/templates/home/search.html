@@ -12,6 +12,16 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script>
+        // Map related functions:
+        function initMap()
+        {
+            map = new google.maps.Map(document.getElementById('map_div'), {
+                zoom: 10,
+                center: city_coordinates
+            });
+        }
+    </script>
   <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFdP_s4uJmTv6i06k7uvnR9Urhlnmuk1U&callback=initMap">
     </script>
@@ -21,7 +31,7 @@
   <!--<link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">-->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="shortcut icon" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/favicon.ico" />
+<link rel="shortcut icon" href="../favicon.ico" />
 <style>
 .text-black
 {
@@ -46,6 +56,7 @@ body, html
 #map_div
 {
     height: 85vh;
+    overflow: hidden;
 }
 .card
 {
@@ -56,6 +67,10 @@ body, html
 {
     width: 100%;
     text-align:left;
+}
+#days
+{
+    overflow: auto;
 }
 </style>
 <script>
@@ -78,22 +93,198 @@ body, html
     var city_coordinates = {lat: 34.052235, lng: -118.243683};
     var map;
     var itinerary = {
-        0:
-        {
-            "Date": "1/12/2019",
-            "closed": 1,
-            "Venice Beach": {lat: 33.977816, lng: -118.469037},
-            "Santa Monica": {lat: 34.024212, lng: -118.496475},
-            "Malibu": {lat: 34.025922, lng: -118.779757},
-            "Getty Center": {lat: 34.094179, lng: -118.439484}
+        0: {
+            0: {
+            'Name': 'Public Art "The Intimacy of Place"',
+            'Opening': '10:00',
+            'Closing': '8:00',
+            'Leave_by': '12:00',
+            'Reach_by': '10:00',
+            'Location': {
+                'lat': 34.0293657,
+                'lng': -118.273467
+            },
+            'Rating': 5
+            },
+            1: {
+            'Name': 'Walt Disney Concert Hall',
+            'Opening': '10:00',
+            'Closing': '8:00',
+            'Leave_by': '14:08',
+            'Reach_by': '12:08',
+            'Location': {
+                'lat': 34.0553454,
+                'lng': -118.249845
+            },
+            'Rating': 4.7
+            },
+            2: {
+            'Name': 'Little Tokyo',
+            'Opening': '11:00',
+            'Closing': '6:30',
+            'Leave_by': '16:12',
+            'Reach_by': '14:12',
+            'Location': {
+                'lat': 34.0493433,
+                'lng': -118.2396309
+            },
+            'Rating': 4.5
+            },
+            3: {
+            'Name': 'Destination Downtown LA Tours',
+            'Opening': '10:00',
+            'Closing': '8:00',
+            'Leave_by': '18:17',
+            'Reach_by': '16:17',
+            'Location': {
+                'lat': 34.0466219,
+                'lng': -118.2507019
+            },
+            'Rating': 4.8
+            },
+            'closed': 1
         },
-        1:
-        {
-            "Date": "1/13/2019",
-            "closed": 1,
-            "Hollywood walk of fame": {lat: 34.1016991, lng: -118.33368359999997},
-            "Griffith Observatory": {lat: 34.11843410000003, lng: -118.30039349999998}
-        }
+        1: {
+            0: {
+            'Name': 'Griffith Park',
+            'Opening': '10:00',
+            'Closing': '8:00',
+            'Leave_by': '12:00',
+            'Reach_by': '10:00',
+            'Location': {
+                'lat': 34.13655440000001,
+                'lng': -118.2942
+            },
+            'Rating': 4.7
+            },
+            1: {
+            'Name': 'Chinatown Central Plaza',
+            'Opening': '12:00',
+            'Closing': '6:00',
+            'Leave_by': '14:13',
+            'Reach_by': '12:13',
+            'Location': {
+                'lat': 34.065245,
+                'lng': -118.2374264
+            },
+            'Rating': 4.1
+            },
+            2: {
+            'Name': 'Guinness World Records Museum',
+            'Opening': '12:00',
+            'Closing': '6:00',
+            'Leave_by': '16:30',
+            'Reach_by': '14:30',
+            'Location': {
+                'lat': 34.1014015,
+                'lng': -118.3380435
+            },
+            'Rating': 3.7
+            },
+            3: {
+            'Name': 'Hollywood Wax Museum®',
+            'Opening': '11:00',
+            'Closing': '6:30',
+            'Leave_by': '18:30',
+            'Reach_by': '16:30',
+            'Location': {
+                'lat': 34.10173109999999,
+                'lng': -118.3381527
+            },
+            'Rating': 4.3
+            },
+            'closed': 1
+        },
+        2: {
+            0: {
+            'Name': 'Battleship USS Iowa Museum',
+            'Opening': '10:00',
+            'Closing': '8:00',
+            'Leave_by': '12:00',
+            'Reach_by': '10:00',
+            'Location': {
+                'lat': 33.7422615,
+                'lng': -118.2772823
+            },
+            'Rating': 4.7
+            },
+            1: {
+            'Name': 'LA Waterfront',
+            'Opening': '11:00',
+            'Closing': '6:30',
+            'Leave_by': '14:01',
+            'Reach_by': '12:01',
+            'Location': {
+                'lat': 33.738759,
+                'lng': -118.279002
+            },
+            'Rating': 4.5
+            },
+            2: {
+            'Name': 'Public Art "Urban Light"',
+            'Opening': '11:00',
+            'Closing': '6:30',
+            'Leave_by': '16:44',
+            'Reach_by': '14:44',
+            'Location': {
+                'lat': 34.0630235,
+                'lng': -118.3592373
+            },
+            'Rating': 4.6
+            },
+            'closed': 1
+        },
+        3: {
+        0: {
+        'Name': 'Runyon Canyon Park',
+        'Opening': '10:00',
+        'Closing': '8:00',
+        'Leave_by': '12:00',
+        'Reach_by': '10:00',
+        'Location': {
+            'lat': 34.1052437,
+            'lng': -118.3489574
+        },
+        'Rating': 4.7
+        },
+        1: {
+        'Name': 'Discover Los Angeles Visitor Information Center (Hollywood)',
+        'Opening': '11:00',
+        'Closing': '6:30',
+        'Leave_by': '14:05',
+        'Reach_by': '12:05',
+        'Location': {
+            'lat': 34.1024501,
+            'lng': -118.3399853
+        },
+        'Rating': 4.3
+        },
+        2: {
+        'Name': 'Jerome C. Daniel Overlook above the Hollywood Bowl',
+        'Opening': '11:00',
+        'Closing': '6:30',
+        'Leave_by': '16:14',
+        'Reach_by': '14:14',
+        'Location': {
+            'lat': 34.116428,
+            'lng': -118.3421476
+        },
+        'Rating': 4.5
+        },
+        3: {
+        'Name': 'Hollywood Sign',
+        'Opening': '11:00',
+        'Closing': '6:30',
+        'Leave_by': '18:25',
+        'Reach_by': '16:25',
+        'Location': {
+            'lat': 34.1341151,
+            'lng': -118.3215482
+        },
+        'Rating': 4.5
+        },
+        'closed': 1
+    }
     }
     function getmarkers(index)
     {
@@ -102,23 +293,14 @@ body, html
         {
             day.closed = 0;
             var markers = [];
-            var num = 0;
-            var sum_lat = 0;
-            var sum_lng = 0;
-            var places = [];
             for(var key in day)
             {
-                if(key == "Date" || key == "closed")
-                {
+                if(key == "closed")
                     continue;
-                }
                 else
-                {
-                    console.log(day[key]);
                     markers[markers.length] = day[key];
-                    places[places.length] = key;
-                }
             }
+            console.log(markers[0]['Location']['lat']);
             var waypoints = [];
             for(var i = 0;i<markers.length;i++)
             {
@@ -128,17 +310,20 @@ body, html
                 }
                 else
                 {
-                    waypoints.push({
-                        location: markers[i],
-                        stopover: true});
+                    waypoints.push(
+                        {
+                            location: {lat: parseFloat(markers[i]['Location']['lat']), lng: parseFloat(markers[i]['Location']['lng'])},
+                            stopover: true
+                        });
                 }
             }
             var directionsService = new google.maps.DirectionsService;
             var directionsDisplay = new google.maps.DirectionsRenderer;
+            initMap();
             directionsDisplay.setMap(map);
             directionsService.route({
-                origin: markers[0],
-                destination: markers[markers.length-1],
+                origin: {lat: parseFloat(markers[0]['Location']['lat']), lng: parseFloat(markers[0]['Location']['lng'])},
+                destination: {lat: parseFloat(markers[markers.length - 1]['Location']['lat']), lng: parseFloat(markers[markers.length - 1]['Location']['lng'])},
                 travelMode: 'DRIVING',
                 waypoints: waypoints
             }, function(response, status) {
@@ -155,8 +340,25 @@ body, html
             initMap();
         }
     }
+    function loadItinerary()
+    {
+        var text = '';
+        for(var day in itinerary)
+        {
+            var num = (parseInt(day)+parseInt(1));
+            text += '<div class="card"><div class="card-header" id="heading'+num+'"><h5 class="mb-0"><button class="btn btn-link day_head" onclick="this.blur();getmarkers('+day+');" type="button" data-toggle="collapse" data-target="#collapse'+num+'" aria-controls="collapse'+num+'"><h3>Day '+num+'</h3></button></h5></div><div id="collapse'+num+'" class="collapse" aria-labelledby="heading'+num+'" data-parent="#accordionExample"><div class="card-body"><ul>';
+            for(var loc in itinerary[day])
+            {
+                if(loc == 'closed')
+                    continue;
+                text += '<li>'+itinerary[day][loc]['Name']+'</li>';
+            }
+            text += '</ul></div></div></div><br />';
+        }
+        document.getElementById('accordionExample').innerHTML = text;
+    }
 </script>
-<body>
+<body onload="loadItinerary()">
   <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
     <nav class="navbar navbar-expand-lg navbar-light bg-primary">
       <a class="navbar-brand w3-text-white" href="#">AI-tiniary</a>
@@ -178,62 +380,16 @@ body, html
                 <h1 class="text-black">Itinerary for <span id="num_days"></span> days in <span id="city_name"></span></h1>
                 <h3 class="text-black">From <span id="start"></span> to <span id="end"></span></h3>
                 <hr />
-                <div>
+                <div id="days">
                     <div class="accordion text-black" id="accordionExample">
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link day_head" onclick="this.blur();getmarkers(0);" type="button" data-toggle="collapse" data-target="#collapseOne" aria-controls="collapseOne">
-                                        <h3>Day 1</h3>
-                                    </button>
-                                </h5>
-                            </div>
-                    
-                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                <div class="card-body">
-                                    <ul>
-                                        <li>Venice Beach</li>
-                                        <li>Santa Monica</li>
-                                        <li>Malibu</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <br/>
-                        <div class="card">
-                            <div class="card-header" id="headingTwo">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link collapsed day_head" onclick="this.blur();getmarkers(1);" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    <h3>Day 2</h3>
-                                </button>
-                            </h5>
-                            </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                <div class="card-body">
-                                    <ul>
-                                        <li>Getty Center</li>
-                                        <li>Hollywood Walk of Fame</li>
-                                        <li>Griffith Observatory</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6" id="map_div">
             </div>
         </div>
-        <script>
-            // Map related functions:
-            function initMap()
-            {
-                map = new google.maps.Map(document.getElementById('map_div'), {
-                    zoom: 10,
-                    center: city_coordinates
-                });
-            }
-        </script>
     </div>
   </div>
 </body>
