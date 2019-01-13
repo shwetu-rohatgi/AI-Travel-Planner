@@ -15,6 +15,9 @@
   <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFdP_s4uJmTv6i06k7uvnR9Urhlnmuk1U&callback=initMap">
     </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFdP_s4uJmTv6i06k7uvnR9Urhlnmuk1U&callback=initMap">
+    </script>
   <!--<link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">-->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
@@ -73,20 +76,83 @@ body, html
     var num_days = calculateNumDays(start_date, end_date);
     var city = "Los Angeles";
     var city_coordinates = {lat: 34.052235, lng: -118.243683};
+    var map;
     var itinerary = {
         0:
         {
             "Date": "1/12/2019",
-            "Venice Beach": {lat: 34.4133825, lng: -119.8412286},
+            "closed": 1,
+            "Venice Beach": {lat: 33.977816, lng: -118.469037},
             "Santa Monica": {lat: 34.024212, lng: -118.496475},
-            "Malibu": {lat: 34.105156, lng: -118.731316}
+            "Malibu": {lat: 34.025922, lng: -118.779757},
+            "Getty Center": {lat: 34.094179, lng: -118.439484}
         },
         1:
         {
             "Date": "1/13/2019",
-            "Getty Center": {lat: 34.094179, lng: -118.439484},
+            "closed": 1,
             "Hollywood walk of fame": {lat: 34.1016991, lng: -118.33368359999997},
             "Griffith Observatory": {lat: 34.11843410000003, lng: -118.30039349999998}
+        }
+    }
+    function getmarkers(index)
+    {
+        var day = itinerary[index];
+        if(day.closed == 1)
+        {
+            day.closed = 0;
+            var markers = [];
+            var num = 0;
+            var sum_lat = 0;
+            var sum_lng = 0;
+            var places = [];
+            for(var key in day)
+            {
+                if(key == "Date" || key == "closed")
+                {
+                    continue;
+                }
+                else
+                {
+                    console.log(day[key]);
+                    markers[markers.length] = day[key];
+                    places[places.length] = key;
+                }
+            }
+            var waypoints = [];
+            for(var i = 0;i<markers.length;i++)
+            {
+                if(i == 0 || i == markers.length - 1)
+                {
+                    continue;
+                }
+                else
+                {
+                    waypoints.push({
+                        location: markers[i],
+                        stopover: true});
+                }
+            }
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer;
+            directionsDisplay.setMap(map);
+            directionsService.route({
+                origin: markers[0],
+                destination: markers[markers.length-1],
+                travelMode: 'DRIVING',
+                waypoints: waypoints
+            }, function(response, status) {
+                if (status === 'OK') {
+                    directionsDisplay.setDirections(response);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
+        else
+        {
+            day.closed = 1;
+            initMap();
         }
     }
 </script>
@@ -137,7 +203,7 @@ body, html
                         <div class="card">
                             <div class="card-header" id="headingTwo">
                             <h5 class="mb-0">
-                                <button class="btn btn-link collapsed day_head" onclick="this.blur()" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <button class="btn btn-link collapsed day_head" onclick="this.blur();getmarkers(1);" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     <h3>Day 2</h3>
                                 </button>
                             </h5>
@@ -162,14 +228,10 @@ body, html
             // Map related functions:
             function initMap()
             {
-                var map = new google.maps.Map(document.getElementById('map_div'), {
+                map = new google.maps.Map(document.getElementById('map_div'), {
                     zoom: 10,
                     center: city_coordinates
                 });
-            }
-            function getmarkers(index)
-            {
-
             }
         </script>
     </div>
